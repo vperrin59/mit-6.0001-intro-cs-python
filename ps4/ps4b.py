@@ -227,6 +227,7 @@ class CiphertextMessage(Message):
         '''
         res = {}
         max_word_shift = 0
+        max_words = 0
         for s in range(26):
             res[s] = {}
             res[s]["text"] = self.apply_shift(25 - s)
@@ -235,7 +236,8 @@ class CiphertextMessage(Message):
             for w in res[s]["text"].split():
                 if is_word(self.valid_words, w):
                     res[s]["words"] += 1
-            if res[s]["words"] > max_word_shift:
+            if res[s]["words"] > max_words:
+                max_words = res[s]["words"]
                 max_word_shift = s
 
         # print(res)
@@ -253,12 +255,12 @@ if __name__ == '__main__':
    print('Expected Output:', (24, 'hello'))
    print('Actual Output:', ciphertext.decrypt_message())
 
-   plaintext = PlaintextMessage('snor', 25)
-   print('Expected Output: rmnq')
+   plaintext = PlaintextMessage('snotty', 25)
+   print('Expected Output: rmnssx')
    print('Actual Output:', plaintext.get_message_text_encrypted())
 
-   ciphertext = CiphertextMessage('rmnq')
-   print('Expected Output:', (1, 'snor'))
+   ciphertext = CiphertextMessage('rmnssx')
+   print('Expected Output:', (1, 'snotty'))
    print('Actual Output:', ciphertext.decrypt_message())
 
    story = get_story_string()
